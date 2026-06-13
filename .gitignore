@@ -1,0 +1,14 @@
+# 依存パッケージ
+backend/node_modules/
+frontend/node_modules/
+
+# ローカルのD1データ（DB本体）
+backend/.wrangler/
+
+# 環境変数（秘密情報）
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# ビルド成果物
+frontend/dist/
