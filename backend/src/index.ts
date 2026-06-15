@@ -1,11 +1,13 @@
 import { Hono } from 'hono'
 import { verify } from 'hono/jwt'
 import { createMiddleware } from 'hono/factory'
+import { cors } from 'hono/cors'
 import clients from './routes/clients'
 import auth from './routes/auth'
 import categories from './routes/categories'
 import logs from './routes/logs'
 import type { AppEnv } from './types'
+
 
 const app = new Hono<AppEnv>()
 
@@ -13,7 +15,18 @@ app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
-// ミドルウェア
+/**
+ * CORSミドルウェア
+*/
+app.use('*', cors({
+  origin: 'http://localhost:5173',
+  allowHeaders: ['Content-Type', 'Authorization'],
+  allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
+}))
+
+/**
+ * 認証ミドルウェア
+*/
 app.use('/api/*', createMiddleware<AppEnv>(async (c, next) => {
   // エンドポイントがauthなら続行(JWT認証へ)
   if (c.req.path.startsWith('/api/auth')) {
