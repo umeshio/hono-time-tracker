@@ -1,0 +1,81 @@
+
+
+.container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: var(--color-text-muted);
+  margin-bottom: 32px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.submitButton:hover {
+  opacity: 0.85;
+}
+
+.toggleButton {
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  font-size: 14px;
+}
+
+.toggleButton:hover {
+  color: var(--color-text);
+}

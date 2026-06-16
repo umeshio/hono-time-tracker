@@ -8,20 +8,6 @@ Hono + D1 + Prisma　で作る タスク・工数管理ツール
 # アーキテクチャ
  - フロントエンド： Vite + React (typescript)
    - ホスティング：Cloudflare Pages 
- - バックエンド：Hono
+ - バックエンド：Hono + drizzle
    - ホスティング： Cloudflare Workers
  - データベース：Cloudflare D1 (SQlite)
-
-
-# 作業フロー
-1. データベース設計とPrismaのセットアップ
-  - WranglerでD1データベースを作成する
-  - Prismaの設定（schema.prisma）を書く
-2. Honoで「CRUD API」の構築（難所）
-3. JWTによる認証・認可の実装（難所）
-  - サインアップ/ログインAPIの作成
-  - HonoミドルウェアによるAPIの保護
-4. 応用ロジックの実装
-  - 割り込みタスク（ポーズ＆割り込み）のロジックをバックエンドに実装
-  - その他、独自のUIアイディアに対応する応用ロジックの組み込み
-5. Reactフロントエンドの実装と結合
