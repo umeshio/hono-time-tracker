@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import LoginPage from './pages/LoginPage'
 import './App.css'
+import { isLoggedIn as checkIsLoggedIn, removeToken } from './api/client'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  // checkIsLoggedInはトークンの有無をbooleanで返す
+  const [isLoggedIn, setIsLoggedIn] = useState(checkIsLoggedIn())
+
+  // ログアウト関数
+  function handleLogout() {
+    removeToken()
+    setIsLoggedIn(false)
+  }
 
   if(!isLoggedIn){
     return <LoginPage onLogin={() => setIsLoggedIn(true)} />
@@ -12,7 +20,7 @@ function App() {
   return (
     <div>
       <h1>ダッシュボード</h1>
-      <button onClick={() => setIsLoggedIn(false)}>ログアウト</button>
+      <button onClick={handleLogout}>ログアウト</button>
     </div>
   )
 }
