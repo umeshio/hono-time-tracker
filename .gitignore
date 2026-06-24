@@ -12,3 +12,6 @@ frontend/.env.local
 
 # ビルド成果物
 frontend/dist/
+
+# 不要
+memo/
