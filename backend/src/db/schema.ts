@@ -1,6 +1,10 @@
 import { sqliteTable, text, integer, index, uniqueIndex } from 'drizzle-orm/sqlite-core'
 import { relations, sql } from 'drizzle-orm'
 
+/**
+ * Table
+ * ユーザー
+*/
 export const users = sqliteTable('User', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   email: text('email').notNull().unique(),
@@ -9,6 +13,10 @@ export const users = sqliteTable('User', {
   updatedAt: text('updatedAt').notNull().default(sql`(datetime('now'))`),
 })
 
+/**
+ * Table
+ * クライアント（企業・投資相手）
+*/
 export const clients = sqliteTable('Client', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text('name').notNull(),
@@ -20,12 +28,20 @@ export const clients = sqliteTable('Client', {
   index('Client_userId_idx').on(table.userId),
 ])
 
+/**
+ * Table
+ * タスク
+*/
 export const taskCategories = sqliteTable('TaskCategory', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text('name').notNull(),
   createdAt: text('createdAt').notNull().default(sql`(datetime('now'))`),
 })
 
+/**
+ * Table
+ * 価格
+*/
 export const priceCards = sqliteTable('PriceCard', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   valueType: text('valueType').notNull(),
@@ -39,6 +55,10 @@ export const priceCards = sqliteTable('PriceCard', {
   uniqueIndex('PriceCard_clientId_taskCategoryId_key').on(table.clientId, table.taskCategoryId),
 ])
 
+/**
+ * Table
+ * タイムログ
+*/
 export const timeLogs = sqliteTable('TimeLog', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   description: text('description').notNull(),
@@ -53,6 +73,10 @@ export const timeLogs = sqliteTable('TimeLog', {
   index('TimeLog_startTime_endTime_idx').on(table.startTime, table.endTime),
 ])
 
+/**
+ * Table
+ * リワード
+*/
 export const rewardSettings = sqliteTable('RewardSetting', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   title: text('title').notNull(),
@@ -63,6 +87,10 @@ export const rewardSettings = sqliteTable('RewardSetting', {
   index('RewardSetting_userId_idx').on(table.userId),
 ])
 
+
+/**
+ * リレーション
+*/
 export const usersRelations = relations(users, ({ many }) => ({
   clients: many(clients),
   rewardSettings: many(rewardSettings),
