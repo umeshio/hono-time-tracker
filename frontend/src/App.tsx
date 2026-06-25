@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import LoginPage from './pages/LoginPage'
-import DashboardPage from './pages/DashuboardPage'
+import DashboardPage from './pages/DashboardPage'
 import './App.css'
 import { isLoggedIn as checkIsLoggedIn } from './api/client'
 

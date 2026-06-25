@@ -35,6 +35,8 @@ export default function DashboardPage({ onLogout }: Props) {
   const [categoryId, setCategoryId] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
+  const [newClientName, setNewClientName] = useState('')
+  const [newCategoryName, setNewCategoryName] = useState('')
 
 	useEffect(() => {
     loadInitialData()
@@ -55,6 +57,32 @@ export default function DashboardPage({ onLogout }: Props) {
       setError(e instanceof Error ? e.message : 'データ取得に失敗しました')
     }
 	}
+
+  // クライアントを新規登録する
+  async function handleAddClient() {
+    setError('')
+    try {
+      await api.post('/api/clients', {name: newClientName, isPrivate: false})
+      setNewClientName('')
+      const clientsRes = await api.get('/api/clients')
+      setClients(clientsRes)
+    } catch(e) {
+      setError(e instanceof Error ? e.message : 'クライアント登録に失敗しました')
+    }
+  }
+
+  // カテゴリを新規登録する
+  async function handleAddCategory() {
+    setError('')
+    try {
+      await api.post('/api/categories', { name: newCategoryName })
+      setNewCategoryName('')
+      const categoriesRes = await api.get('/api/categories')
+      setCategories(categoriesRes)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'カテゴリ登録に失敗しました')
+    }
+  }
 
 	// タイマーをスタートする
 	async function handleStart() {
@@ -90,6 +118,26 @@ export default function DashboardPage({ onLogout }: Props) {
     <div>
       <h1>ダッシュボード</h1>
       <button onClick={handleLogout}>ログアウト</button>
+
+      <div>
+        <input
+          type="text"
+          placeholder="新しいクライアント名"
+          value={newClientName}
+          onChange={e => setNewClientName(e.target.value)}
+        />
+        <button onClick={handleAddClient} disabled={!newClientName}>クライアント追加</button>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="新しいカテゴリ名"
+          value={newCategoryName}
+          onChange={e => setNewCategoryName(e.target.value)}
+        />
+        <button onClick={handleAddCategory} disabled={!newCategoryName}>カテゴリ追加</button>
+      </div>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
