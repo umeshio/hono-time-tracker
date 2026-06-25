@@ -22,6 +22,17 @@ type CurrentLog = {
   Client: Client
 } | null
 
+type LogEntry = {
+  TimeLog: {
+    id: string
+    description: string
+    startTime: string
+    endTime: string | null
+  }
+  Client: Client
+  TaskCategory: TaskCategory
+}
+
 type Props = {
   onLogout: () => void
 }
@@ -37,6 +48,7 @@ export default function DashboardPage({ onLogout }: Props) {
   const [error, setError] = useState('')
   const [newClientName, setNewClientName] = useState('')
   const [newCategoryName, setNewCategoryName] = useState('')
+  const [logs, setLogs] = useState<LogEntry[]>([])
 
 	useEffect(() => {
     loadInitialData()
@@ -45,14 +57,16 @@ export default function DashboardPage({ onLogout }: Props) {
 	// ログインアカウントのデータをロードする
 	async function loadInitialData() {
 		try {
-      const [clientsRes, categoriesRes, currentLogRes] = await Promise.all([
+      const [clientsRes, categoriesRes, currentLogRes, logsRes] = await Promise.all([
         api.get('/api/clients'),
         api.get('/api/categories'),
         api.get('/api/logs/current'),
+        api.get('/api/logs'),
       ])
       setClients(clientsRes)
       setCategories(categoriesRes)
       setCurrentLog(currentLogRes)
+      setLogs(logsRes)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'データ取得に失敗しました')
     }
@@ -103,6 +117,8 @@ export default function DashboardPage({ onLogout }: Props) {
     try {
       await api.patch(`/api/logs/${currentLog.TimeLog.id}/stop`)
       setCurrentLog(null)
+      const logsRes = await api.get('/api/logs')
+      setLogs(logsRes)
     } catch (e) {
       setError(e instanceof Error ? e.message : '計測停止に失敗しました')
     }
@@ -173,6 +189,16 @@ export default function DashboardPage({ onLogout }: Props) {
           <button onClick={handleStart} disabled={!clientId || !categoryId}>開始</button>
         </div>
       )}
+
+      <h2>履歴</h2>
+      <ul>
+        {logs.map(log => (
+          <li key={log.TimeLog.id}>
+            {log.Client.name} / {log.TaskCategory.name} - {log.TimeLog.description}
+            （{log.TimeLog.startTime} 〜 {log.TimeLog.endTime ?? '計測中'}）
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

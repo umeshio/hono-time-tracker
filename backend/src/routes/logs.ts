@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { drizzle } from 'drizzle-orm/d1'
-import { eq, isNull, and } from 'drizzle-orm'
+import { eq, isNull, and, desc } from 'drizzle-orm'
 import * as schema from '../db/schema'
 import type { AppEnv } from '../types'
 
@@ -45,6 +45,23 @@ logs.patch('/:id/stop', async (c) => {
 		.where(eq(schema.timeLogs.id, id))
 		.returning()
 	return c.json(updated[0])
+})
+
+/**
+ * ログ一覧取得
+ * ログインユーザーの全履歴、新しい順
+*/
+logs.get('/', async (c) => {
+  const db = drizzle(c.env.time_tracker_db, {schema})
+  const userId = c.get('userId')
+  
+  const allLogs = await db.select().from(schema.timeLogs)
+  .innerJoin(schema.clients, eq(schema.timeLogs.clientId, schema.clients.id))
+  .innerJoin(schema.taskCategories, eq(schema.timeLogs.taskCategoryId, schema.taskCategories.id))
+    .where(eq(schema.clients.userId, userId))
+    .orderBy(desc(schema.timeLogs.startTime))
+
+  return c.json(allLogs)
 })
 
 /**
