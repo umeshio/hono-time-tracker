@@ -8,6 +8,20 @@
       "when": 1781328997144,
       "tag": "0000_glamorous_thundra",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1782532863818,
+      "tag": "0001_material_mercury",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1782542579559,
+      "tag": "0002_fresh_network",
+      "breakpoints": true
     }
   ]
 }

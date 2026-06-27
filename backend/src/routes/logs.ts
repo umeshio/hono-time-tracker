@@ -24,13 +24,17 @@ logs.post('/start', async (c) => {
     const newlog = await db.insert(schema.timeLogs).values({
       clientId: reqLog.clientId,
       taskCategoryId: reqLog.taskCategoryId,
-      description: reqLog.description
+      description: reqLog.description,
+      valueType: reqLog.valueType,
+      amount: reqLog.amount,
+      stampIcon: reqLog.stampIcon || null,
     }).returning()
     return c.json(newlog[0], 201)
   } catch (e) {
     return c.json({ error: String(e) }, 500)
   }
 })
+
 
 /**
  * タイマー停止（終了時刻を記録）
