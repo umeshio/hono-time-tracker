@@ -1,10 +1,6 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@import "tailwindcss";
 
-:root {
+@theme {
   --color-bg: #0f1117;
   --color-surface: #1a1d27;
   --color-border: #2e3140;
