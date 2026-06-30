@@ -28,14 +28,14 @@ export default function LoginPage({onLogin}:Props) {
 	}
 
 	return(
-		<div className={styles.container}>
-			<h1 className={styles.title}>Time Tracker</h1>
-			<h2 className={styles.subtitle}>
+		<div className="max-w-100 mx-auto mt-28 mb-28 p-10 bg-surface rounded-xl">
+			<h1 className="text-3xl font-bold text-bg text-center mb-3 tracking-wider">Time Tracker</h1>
+			<h2 className="text-center text-bg font-medium mb-3">
 				{isSignup ? 'アカウント作成' : 'ログイン'}
 			</h2>
 			<form onSubmit={handleSubmit}>
         <div className={styles.field}>
-          <label className={styles.label}>メールアドレス</label>
+          <label className="text-bg text-sm">メールアドレス</label>
           <input
             className={styles.input}
             type="email"
@@ -45,7 +45,7 @@ export default function LoginPage({onLogin}:Props) {
           />
         </div>
         <div className={styles.field}>
-          <label className={styles.label}>パスワード</label>
+          <label className="text-bg text-sm">パスワード</label>
           <input
             className={styles.input}
             type="password"
@@ -60,7 +60,7 @@ export default function LoginPage({onLogin}:Props) {
         </button>
       </form>
       <button
-        className={styles.toggleButton}
+        className="text-xs text-text text-center w-fit mx-auto block mt-2"
         onClick={() => setIsSignup(!isSignup)}
       >
         {isSignup ? 'ログインに戻る' : 'アカウントを作成する'}
